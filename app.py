@@ -4,7 +4,7 @@ import os
 
 from models.user import User
 
-from ORM.sql_requests import SQLrequests
+from ORM.sql_requests import ORM
 
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, 'templates')
@@ -15,6 +15,7 @@ app = Flask(__name__, template_folder=template_path)
 @app.route('/', methods=['GET'])
 def hello():
     return render_template('index.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -33,6 +34,11 @@ def register():
 
     print(user)
     return render_template('register.html')
+
+
+@app.route('testorm', methods=['GET'])
+def test():
+    ORM.register_user(username="alah", password="asd", name="Bob", surname="Dilan")
 
 
 if __name__ == '__main__':

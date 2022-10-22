@@ -2,11 +2,12 @@ from sqlalchemy import create_engine, Column, String, JSON
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-from configs.hosts import *
+from configs.geturl import getUrlByConfigs
 
 declarativeDataBase = declarative_base()
 
-class NewUserData(declarativeDataBase):
+
+class UserRegister(declarativeDataBase):
     __tablename__ = "UserData"
 
     id = Column("id", String)
@@ -19,20 +20,15 @@ class NewUserData(declarativeDataBase):
         return "".format(self.code)
 
 
-class SQLrequests:
+class ORM:
+    @staticmethod
+    def __init__(self):
+        self.dataBase = create_engine(getUrlByConfigs())
 
-	def __init__(self):
-		host_url = f"postgresql://{HOST_USER}:{HOST_PASS}@{HOST_IP}:{HOST_PORT}/{DB_NAME}"
-		self.dataBase = create_engine(db_string)
+    @staticmethod
+    def register_user(self, username, password, name, surname, phone="None", mail="None"):
+        session_class = sessionmaker(self.dataBase)
+        session = session_class()# init class
 
-
-	def register_user(username, password, name, surname, phone="None", mail="None"):
-		session = self.Session_class() # init class
-
-		user = NewUserData(id = "123456789012345678", firstname = name, lastname = surname, identifiers= {"mail": mail,"phone":phone})
-		print(user.id,user.identifiers)
-
-
-s = SQLrequests()
-
-s.register_user(username="alah",password="asd",name = "Bob", surname = "Dilan")
+        user = UserRegister(id = "123456789012345678", firstname = name, lastname = surname, identifiers= {"mail": mail,"phone":phone})
+        print(user.id, user.identifiers)
