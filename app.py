@@ -4,7 +4,7 @@ import os
 
 from models.user import User
 
-# from ORM.sql_requests import SQLrequest
+from ORM.sql_requests import SQLrequest
 
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, 'templates')
