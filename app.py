@@ -13,6 +13,8 @@ def hello():
     return render_template('index.html')
 
 
+#bebra
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     user = User()
