@@ -39,6 +39,7 @@ def register():
 @app.route('/testorm', methods=['GET'])
 def test():
     ORM.register_user(username="alah", password="asd", name="Bob", surname="Dilan")
+    return "Hello Test orm"
 
 
 if __name__ == '__main__':
