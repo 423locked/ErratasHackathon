@@ -36,7 +36,7 @@ def register():
     return render_template('register.html')
 
 
-@app.route('testorm', methods=['GET'])
+@app.route('/testorm', methods=['GET'])
 def test():
     ORM.register_user(username="alah", password="asd", name="Bob", surname="Dilan")
 

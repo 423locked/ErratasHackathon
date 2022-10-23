@@ -7,7 +7,7 @@ from configs.geturl import getUrlByConfigs
 declarativeDataBase = declarative_base()
 
 
-class UserRegister(declarativeDataBase):
+'''class UserRegister(declarativeDataBase):
     __tablename__ = "UserData"
 
     id = Column("id", String)
@@ -17,18 +17,19 @@ class UserRegister(declarativeDataBase):
     identifiers = Column(JSON)
 
     def __repr__(self):
-        return "".format(self.code)
+        return "".format(self.code)'''
+
+
+def get_engine():
+    return create_engine(getUrlByConfigs())
 
 
 class ORM:
     @staticmethod
-    def __init__(self):
-        self.dataBase = create_engine(getUrlByConfigs())
-
-    @staticmethod
-    def register_user(self, username, password, name, surname, phone="None", mail="None"):
-        session_class = sessionmaker(self.dataBase)
+    def register_user(username, password, name, surname, phone="None", mail="None"):
+        session_class = sessionmaker(get_engine())
         session = session_class()# init class
 
-        user = UserRegister(id = "123456789012345678", firstname = name, lastname = surname, identifiers= {"mail": mail,"phone":phone})
-        print(user.id, user.identifiers)
+        #user = UserRegister(id = "123456789012345678", firstname = name, lastname = surname, identifiers= {"mail": mail,"phone":phone})
+        #print(user.id, user.identifiers)
+        print('aint no way')
