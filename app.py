@@ -39,10 +39,10 @@ def register():
             {'mail': request.form['mail'], 'phone': request.form['phone']})
         if ORM.isUserRegisteredByUsername(user.username):
             return render_template('index.html')
+        else:
+            ORM.register_user(user)
     else:
-
-
-    return render_template('index.html')
+        return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
