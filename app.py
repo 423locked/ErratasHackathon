@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, render_template, request
 
 import os
@@ -12,9 +14,9 @@ template_path = os.path.join(project_root, 'templates')
 app = Flask(__name__, template_folder=template_path)
 
 
-@app.errorhandler(Exception)
-def all_exception_handler(error):
-   return 'Error'+ error.code, 500
+#@app.errorhandler(Exception)
+#def all_exception_handler(error):
+#   return 'Error', 500
 
 
 @app.route('/', methods=['GET'])
@@ -33,8 +35,8 @@ def register():
         user.groupname = '123'
         user.username = request.form['username']
         user.password = request.form['password']
-        user.mail = request.form['mail']
-        user.phone = request.form['phone']
+        user.identifier = json.dumps(
+            {'mail': request.form['mail'], 'phone': request.form['phone']})
     else:
         user.firstname = request.args.get('firstname')
         user.middlename = request.args.get('middlename')
@@ -42,11 +44,13 @@ def register():
         user.groupname = '123'
         user.username = request.args.get('username')
         user.password = request.args.get('password')
-        user.mail = request.args.get('mail')
-        user.phone = request.args.get('phone')
+        user.identifier = json.dumps(
+            {'mail': request.args.get('mail'), 'phone': request.args.get('phone')})
 
+    print(user)
+    print(user.identifier)
     ORM.register_user(user)
-    return render_template('register.html')
+    return render_template('index.html')
 
 
 @app.route('/testorm', methods=['GET'])

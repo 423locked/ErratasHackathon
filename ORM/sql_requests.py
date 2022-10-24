@@ -24,8 +24,9 @@ class ORM:
     def register_user(_user):
         db = get_session()
 
+        print("IN REGISTER USER")
         userData = UserData(id=utils.generatePK(), firstname=_user.firstname, middlename=_user.middlename, lastname=_user.lastname, groupname='default')
-        userLogin = UserLogin(id=utils.generatePK(), username=_user.username, password=utils.hash(_user.password), identifier={"mail": _user.mail,"phone": _user.phone})
+        userLogin = UserLogin(id=utils.generatePK(), username=_user.username, password=utils.hash(_user.password), identifier=_user.identifier)
 
         db.add(userData)
         db.add(userLogin)
