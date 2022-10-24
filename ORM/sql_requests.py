@@ -8,7 +8,7 @@ from utils import utils
 from configs.geturl import getUrlByConfigs
 from models.UserData import UserData
 from models.UserLogin import UserLogin
-
+from models.User import User
 
 def get_engine():
     return create_engine(getUrlByConfigs())
@@ -21,11 +21,11 @@ def get_session():
 # https://www.compose.com/articles/using-postgresql-through-sqlalchemy/
 class ORM:
     @staticmethod
-    def register_user(_username, _password, _name, _surname, _phone="None", _mail="None"):
+    def register_user(_user):
         db = get_session()
 
-        userData = UserData(id=utils.generatePK(), firstname=_name, middlename='Bebra', lastname=_surname, groupname='default')
-        userLogin = UserLogin(id=utils.generatePK(), username=_username, password=utils.hash(_password), identifier={"mail": _mail,"phone": _phone})
+        userData = UserData(id=utils.generatePK(), firstname=_user.firstname, middlename=_user.middlename, lastname=_user.lastname, groupname='default')
+        userLogin = UserLogin(id=utils.generatePK(), username=_user.username, password=utils.hash(_user.password), identifier={"mail": _user.mail,"phone": _user.phone})
 
         db.add(userData)
         db.add(userLogin)

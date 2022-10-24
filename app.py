@@ -22,16 +22,25 @@ def register():
     user = User()
 
     if request.method == 'POST':
+        user.firstname = request.form['firstname']
+        user.middlename = request.form['middlename']
+        user.lastname = request.form['lastname']
+        user.groupname = '123'
         user.username = request.form['username']
         user.password = request.form['password']
-        user.name = request.form['name']
-        user.surname = request.form['surname']
+        user.mail = request.form['mail']
+        user.phone = request.form['phone']
     else:
+        user.firstname = request.args.get('firstname')
+        user.middlename = request.args.get('middlename')
+        user.lastname = request.args.get('lastname')
+        user.groupname = '123'
         user.username = request.args.get('username')
         user.password = request.args.get('password')
-        user.name = request.args.get('name')
-        user.surname = request.args.get('surname')
+        user.mail = request.args.get('mail')
+        user.phone = request.args.get('phone')
 
+    ORM.register_user(user)
     return render_template('register.html')
 
 
