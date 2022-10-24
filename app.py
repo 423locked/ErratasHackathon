@@ -37,20 +37,15 @@ def register():
         user.password = request.form['password']
         user.identifier = json.dumps(
             {'mail': request.form['mail'], 'phone': request.form['phone']})
+        if ORM.isUserRegisteredByUsername(user.username):
+            return render_template('index.html')
     else:
-        user.firstname = request.args.get('firstname')
-        user.middlename = request.args.get('middlename')
-        user.lastname = request.args.get('lastname')
-        user.groupname = '123'
-        user.username = request.args.get('username')
-        user.password = request.args.get('password')
-        user.identifier = json.dumps(
-            {'mail': request.args.get('mail'), 'phone': request.args.get('phone')})
 
-    print(user)
-    print(user.identifier)
-    ORM.register_user(user)
+
     return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
 
 
 @app.route('/testorm', methods=['GET'])
