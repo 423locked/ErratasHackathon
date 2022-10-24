@@ -43,6 +43,13 @@ class ORM:
         return user is not None
 
     @staticmethod
+    def loginCheck(_username, _password):
+        db = get_session()
+        user = db.scalars(select(UserLogin)
+                          .filter_by(username=_username, password= utils.hash(_password))).first()
+        return user is not None
+
+    @staticmethod
     def getAllUsers():
         db = get_session()
         x = db.scalars(select(UserLogin).filter_by(username='mike')).first()

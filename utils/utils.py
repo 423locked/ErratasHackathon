@@ -11,3 +11,6 @@ def hash(_password):
 
 def getMailFromJSON(_jsonString):
     return json.load(_jsonString)['mail']
+
+def checkInject(string):
+    return "".join(string.split("'"))
