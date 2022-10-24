@@ -10,9 +10,6 @@ from models.UserData import UserData
 from models.UserLogin import UserLogin
 
 
-declarativeDataBase = declarative_base()
-
-
 def get_engine():
     return create_engine(getUrlByConfigs())
 
@@ -40,15 +37,12 @@ class ORM:
     def isUserRegisteredByUsername(_username):
         db = get_session()
         user = db.scalars(select(UserLogin)
-                          .filter_by(username=_username)
-                          .limit(1)).first()
-        return user is None
+                          .filter_by(username=_username)).first()
+
+        return user is not None
 
     @staticmethod
-    def isUserRegisteredByMail(_mail):
+    def getAllUsers():
         db = get_session()
-        user = db.scalars(select(UserLogin)
-                          .where(utils.getMailFromJSON(_jsonString=UserLogin.identifier)
-                                 == utils.getMailFromJSON(_jsonString=_mail))
-                          .limit(1)).first()
-        return user is None
+        x = db.scalars(select(UserLogin).filter_by(username='mike')).first()
+        return "id = " + str(x.id) + " username = " + str(x.username)

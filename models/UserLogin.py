@@ -1,5 +1,7 @@
-from ORM.sql_requests import declarativeDataBase
 from sqlalchemy import String, Column, JSON
+from sqlalchemy.ext.declarative import declarative_base
+
+declarativeDataBase = declarative_base()
 
 
 class UserLogin(declarativeDataBase):

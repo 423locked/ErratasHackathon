@@ -32,24 +32,21 @@ def register():
         user.name = request.args.get('name')
         user.surname = request.args.get('surname')
 
-    if ORM.isUserRegisteredByUsername(_username=user.username):
-        print('USERNAME IS IN DB')
-    elif ORM.isUserRegisteredByMail(_mail=user):
-        print('MAIL IS IN DB')
-    else:
-        print("USER NOT FOUND")
     return render_template('register.html')
 
 
 @app.route('/testorm', methods=['GET'])
 def test():
-    if ORM.isUserRegisteredByUsername(_username=user.username):
-        return 'USERNAME IS IN DB'
-    elif ORM.isUserRegisteredByMail(_mail=user):
-        return 'MAIL IS IN DB'
+    username = request.args.get('username')
+    if ORM.isUserRegisteredByUsername(_username=username):
+        return str(username) + " is in DB!"
     else:
-        return "USER NOT FOUND"
+        return str(username) + " is not found :("
 
+
+@app.route('/getall', methods=['GET'])
+def getusers():
+    return ORM.getAllUsers()
 
 
 if __name__ == '__main__':

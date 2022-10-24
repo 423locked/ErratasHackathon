@@ -13,4 +13,5 @@ class User:
 
     def __str__(self):
         return 'User({}, {}, {}, {}, {}, {}, {})'\
-            .format(self.username, self.password, self.name, self.surname)
+            .format(self.firstname, self.middlename, self.lastname,
+                    self.groupname, self.username, self.password, self.identifier)
