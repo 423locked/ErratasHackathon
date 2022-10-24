@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 import os
 
-from models.user import User
+from models.User import User
 
 from ORM.sql_requests import ORM
 
@@ -32,15 +32,24 @@ def register():
         user.name = request.args.get('name')
         user.surname = request.args.get('surname')
 
-    print(user)
+    if ORM.isUserRegisteredByUsername(_username=user.username):
+        print('USERNAME IS IN DB')
+    elif ORM.isUserRegisteredByMail(_mail=user):
+        print('MAIL IS IN DB')
+    else:
+        print("USER NOT FOUND")
     return render_template('register.html')
 
 
 @app.route('/testorm', methods=['GET'])
 def test():
-    ORM.register_user(username="mike", password="asd123", name="Mike", surname="Herrington")
-    ORM.register_user(username="tim", password="hashdhsad", name="Tim", surname="Longman")
-    return "Hello Test orm"
+    if ORM.isUserRegisteredByUsername(_username=user.username):
+        return 'USERNAME IS IN DB'
+    elif ORM.isUserRegisteredByMail(_mail=user):
+        return 'MAIL IS IN DB'
+    else:
+        return "USER NOT FOUND"
+
 
 
 if __name__ == '__main__':
