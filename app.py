@@ -27,7 +27,6 @@ def hello():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     user = User()
-
     if request.method == 'POST':
         user.firstname = request.form['firstname']
         user.middlename = request.form['middlename']
@@ -38,14 +37,13 @@ def register():
         user.identifier = json.dumps(
             {'mail': request.form['mail'], 'phone': request.form['phone']})
         if ORM.isUserRegisteredByUsername(user.username):
-            return render_template('index.html')
+            return render_template('index.html', success=False)
         else:
             ORM.register_user(user)
+            return render_template('index.html', success=True)
     else:
-        return render_template('index.html')
+        return render_template('index.html', )
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
 
 
 @app.route('/testorm', methods=['GET'])
