@@ -1,4 +1,6 @@
-import _sha256, uuid, json
+import _sha256, uuid, json, time, jwt
+
+from configs.hosts import JWT_SALT
 
 
 def generatePK():
@@ -14,3 +16,6 @@ def getMailFromJSON(_jsonString):
 
 def checkInject(string):
     return "".join(string.split("'"))
+
+def genJWT():
+    return jwt.encode({"unic":str(time.time())},JWT_SALT, algorithm="HS256")

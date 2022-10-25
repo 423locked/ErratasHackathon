@@ -50,6 +50,12 @@ class ORM:
         return user is not None
 
     @staticmethod
+    def createToken():
+        # Все нахуй переделать
+        return str(utils.genJWT())
+
+
+    @staticmethod
     def getAllUsers():
         db = get_session()
         x = db.scalars(select(UserLogin).filter_by(username='mike')).first()
