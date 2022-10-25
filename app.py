@@ -26,18 +26,22 @@ def hello():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    user = User()
     if request.method == 'POST':
+        user = User()
+
         user.firstname = request.form['firstname']
         user.middlename = request.form['middlename']
         user.lastname = request.form['lastname']
-        user.groupname = '123'
+        user.groupname = '123' # ПЕРЕДЕЛАТЬ!!!
         user.username = request.form['username']
         user.password = request.form['password']
         user.identifier = json.dumps(
             {'mail': request.form['mail'], 'phone': request.form['phone']})
+
+        # Нужно прописать обязательные и необязательный поля
+
         if ORM.isUserRegisteredByUsername(user.username):
-            return render_template('index.html', success=False)
+            return render_template('index.html', success=False) # Отпечатать ошибку, что пользователь уже создан
         else:
             ORM.register_user(user)
             return render_template('index.html', success=True)
@@ -46,16 +50,37 @@ def register():
 
 
 
-@app.route('/testorm', methods=['GET'])
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if ORM.loginCheck(username,password):
+
+            # CREATE SESSION
+
+            if ORM.isSessionExist(username):
+                pass
+            
+            # По-хорошему здесь надо перенапраить пользователя на другой адрес ("/dashboard")
+            return render_template('dashboard.html') # Таблица из задания номер 2
+        else:
+            return render_template('login.html') # Отпечатать "Неправильное имя польхователя или пароль"
+    else:
+        return render_template('login.html')
+        
+'''
+@app.route('/test', methods=['GET'])
 def test():
-    username = request.args.get('username')
-    return ORM.createToken(username)
+    username = "loh"
+    if ORM.isSessionExist(username):
+        return "has"
+    else:
+        return "has no"  
 
-
-@app.route('/getall', methods=['GET'])
-def getusers():
-    return ORM.getAllUsers()
-
+    return str(ORM.refreshToken("mike"))
+'''
 
 if __name__ == '__main__':
     app.run(debug=True)
