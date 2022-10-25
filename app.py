@@ -1,5 +1,5 @@
 import json, jwt
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for, redirect
 
 import os
 
@@ -18,9 +18,9 @@ def all_exception_handler(error):
    return 'Error', 500
 
 
-@app.route('/', methods=['GET'])
-def hello():
-    return render_template('index.html')
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return redirect(url_for('register'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -53,7 +53,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        print(username, password)
+
         if ORM.loginCheck(username, password):
 
             # CREATE SESSION
@@ -64,16 +64,27 @@ def login():
                 ORM.createSession(username)
             
             # По-хорошему здесь надо перенапраить пользователя на другой адрес ("/dashboard")
-            return render_template('dashboard.html') # Таблица из задания номер 2
+            return render_template('successfulllogin.html', accessToken=ORM.getAccessToken(username)) # Таблица из задания номер 2
         else:
-            return render_template('login.html') # Отпечатать "Неправильное имя польхователя или пароль"
+            return render_template('login.html', wrongCredentials=True) # Отпечатать "Неправильное имя польхователя или пароль"
     else:
         return render_template('login.html')
-        
+
+
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    return render_template('dashboard.html')
+
 
 @app.route('/test', methods=['GET'])
 def test():
     return ORM.getAccessToken("mike")
+
+
+@app.route('/testvue', methods=['GET'])
+def testvue():
+    return render_template('test.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

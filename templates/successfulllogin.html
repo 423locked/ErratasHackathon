@@ -27,7 +27,31 @@
 	<link rel="stylesheet" type="text/css" href="./static/css/main.css">
 <!--===============================================================================================-->
 </head>
+
 <body>
-    <h1>Dashboard</h1>
+    	<div class="limiter">
+		    <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                      <h1 class="login100-form-title p-b-49">
+                          Successfully logged in!
+                      </h1>
+
+                      <form action="/dashboard">
+                          <div class="container-login100-form-btn">
+                              <div class="wrap-login100-form-btn">
+                                  <div class="login100-form-bgbtn"></div>
+                                    <button class="login100-form-btn">Dashboard</button>
+                              </div>
+                        </div>
+                      </form>
+                </div>
+            </div>
+        </div>
+
+  <script>
+    var token = {{ accessToken | tojson }}
+    console.log(token)
+    localStorage.setItem('accessToken', token)
+  </script>
 </body>
 </html>

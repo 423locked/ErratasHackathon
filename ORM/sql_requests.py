@@ -21,8 +21,6 @@ def get_session():
 
 # https://www.compose.com/articles/using-postgresql-through-sqlalchemy/
 class ORM:
-
-    #GET DB
     @staticmethod
     def getUserId(_username):
         db = get_session()
@@ -49,7 +47,6 @@ class ORM:
         db = get_session()
         user = db.scalars(select(CleanSession).filter_by(id=_id)).first()
         return user.accesstoken
-
 
     @staticmethod
     def loginCheck(_username, _password):
