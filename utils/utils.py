@@ -17,5 +17,8 @@ def getMailFromJSON(_jsonString):
 def checkInject(string):
     return "".join(string.split("'"))
 
-def genJWT():
-    return jwt.encode({"unic":str(time.time())},JWT_SALT, algorithm="HS256")
+def genJWT(_username):
+    return jwt.encode({"user":str(_username)},JWT_SALT, algorithm="HS256")
+
+def decodeJWT(token):
+    return jwt.decode(token, JWT_SALT, algorithms=["HS256"])

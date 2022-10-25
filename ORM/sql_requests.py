@@ -50,9 +50,9 @@ class ORM:
         return user is not None
 
     @staticmethod
-    def createToken():
+    def createToken(_username):
         # Все нахуй переделать
-        return str(utils.genJWT())
+        return utils.decodeJWT(str(utils.genJWT(_username)))
 
 
     @staticmethod

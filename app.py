@@ -49,10 +49,7 @@ def register():
 @app.route('/testorm', methods=['GET'])
 def test():
     username = request.args.get('username')
-    if ORM.isUserRegisteredByUsername(_username=username):
-        return str(username) + " is in DB!"
-    else:
-        return str(username) + " is not found :("
+    return ORM.createToken(username)
 
 
 @app.route('/getall', methods=['GET'])
