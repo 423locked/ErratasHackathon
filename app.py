@@ -59,7 +59,9 @@ def login():
             # CREATE SESSION
 
             if ORM.isSessionExist(username):
-                pass
+                ORM.refreshToken(username)
+            else:
+                ORM.createSession(username)
             
             # По-хорошему здесь надо перенапраить пользователя на другой адрес ("/dashboard")
             return render_template('dashboard.html') # Таблица из задания номер 2
@@ -68,17 +70,10 @@ def login():
     else:
         return render_template('login.html')
         
-'''
+
 @app.route('/test', methods=['GET'])
 def test():
-    username = "loh"
-    if ORM.isSessionExist(username):
-        return "has"
-    else:
-        return "has no"  
-
-    return str(ORM.refreshToken("mike"))
-'''
+    return ORM.getAccessToken("mike")
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -23,7 +23,6 @@ def get_session():
 class ORM:
 
     #GET DB
-
     @staticmethod
     def getUserId(_username):
         db = get_session()
@@ -43,6 +42,14 @@ class ORM:
         user = db.scalars(select(UserLogin)
                           .filter_by(username=_username)).first()
         return user is not None
+  
+    @staticmethod
+    def getAccessToken(_username):
+        _id = ORM.getUserId(_username)
+        db = get_session()
+        user = db.scalars(select(CleanSession).filter_by(id=_id)).first()
+        return user.accesstoken
+
 
     @staticmethod
     def loginCheck(_username, _password):
