@@ -1,5 +1,4 @@
-import json
-
+import json, jwt
 from flask import Flask, render_template, request
 
 import os
@@ -14,9 +13,9 @@ template_path = os.path.join(project_root, 'templates')
 app = Flask(__name__, template_folder=template_path)
 
 
-#@app.errorhandler(Exception)
-#def all_exception_handler(error):
-#   return 'Error', 500
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+   return 'Error', 500
 
 
 @app.route('/', methods=['GET'])
@@ -42,8 +41,7 @@ def register():
             ORM.register_user(user)
             return render_template('index.html', success=True)
     else:
-        return render_template('index.html', )
-
+        return render_template('index.html')
 
 
 @app.route('/testorm', methods=['GET'])

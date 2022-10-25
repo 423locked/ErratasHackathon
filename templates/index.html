@@ -37,6 +37,24 @@
 						Register
 					</span>
 
+						{% if success is not none and success == True %}
+							<span class="login100-form-title p-b-49">
+								Successfully registered!
+								<div class="container-login100-form-btn">
+									<div class="wrap-login100-form-btn">
+										<div class="login100-form-bgbtn"></div>
+										<button onclick="location.href='/login'" class="login100-form-btn">
+											Login
+										</button>
+									</div>
+								</div>
+							</span>
+						{% elif success is not none and success == False %}
+							<span class="login100-form-title p-b-49">
+								Unfortunately, username is already registered.
+							</span>
+						{% endif %}
+
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "First Name is required">
 						<span class="label-input100">First Name</span>
 						<input class="input100" type="text" name="firstname" placeholder="Type your first name">
