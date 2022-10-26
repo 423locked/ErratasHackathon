@@ -40,7 +40,11 @@
 					</span>
 
 					{% if wrongCredentials is not none and wrongCredentials == True %}
-						<h2 class="login100-form-title p-b-49" color="red">Wrong username or password!</h2>
+						<h2 class="login100-form-title p-b-49">Wrong username or password!</h2>
+					{% endif %}
+
+					{% if sessionEnded is not none and sessionEnded == True %}
+						<h2 class="login100-form-title p-b-49">Your session expired! Please login again.</h2>
 					{% endif %}
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
@@ -71,45 +75,7 @@
 
 	<div id="dropDownSelect1"></div>
 
-	<script>
-		// initialize the validation library
-		const validation = new JustValidate('#form', {
-			  errorFieldCssClass: 'is-invalid',
-			  tooltip: {
-			  	position: 'right'
-			  },
-			  lockForm: false
-		});
-		// apply rules to form fields
-		validation
-		.addField('#username', [
-				{
-				  rule: 'minLength',
-				  value: 3,
-				},
-				{
-				  rule: 'maxLength',
-				  value: 30,
-				},
-				{
-				  rule: 'required'
-				},
-				{
-				  rule: 'customRegexp',
-				  value: '^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$',
-				  errorMessage: 'Incorrect format'
-				}
-			  ])
-	    .addField('#password', [
-		{
-		  rule: 'required'
-		}
-		  ])
-		  .onSuccess((event) => {
-			console.log('Validation passes and form submitted', event);
-			validation.destroy()
-	 	 });
-	</script>
+
 <!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
