@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<script> 
-	httpRequest = new XMLHttpRequest();
-    httpRequest.open('POST', 'post_token');
-    var data = JSON.stringify({"accessToken": localStorage.getItem('accessToken')});
-    httpRequest.send(data);
+<script type="text/javascript"> 
+    var host = window.location.host;
+    var c = "http://" + host + "/dashboard?accessToken=" + localStorage.getItem('accessToken');
+    document.location.href = c;
 </script>
 
 <body>

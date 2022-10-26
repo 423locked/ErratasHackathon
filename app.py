@@ -70,15 +70,21 @@ def login():
     else:
         return render_template('login.html')
 
-@app.route('/post_token', methods=['POST'])
-def post_token():
-    token = request.get_json(force=True)
-    return ""
-
 @app.route('/dashboard', methods=['GET', 'POST'])
-def dashboard():
-    return render_template('dashboard.html')
-    
+def dashboard():    
+
+    token = request.args.get('accessToken')
+    print(request.args.get('accessToken'))
+    if request.args.get('accessToken') is not None:
+        
+        if ORM.isTokenOverdue(token):
+             return redirect(url_for('login')) # НАПИШИ, что сессия кончилась
+        else:
+            return render_template('_dashboard.html') # Бля буду
+    else:
+        print("bla")
+        return render_template('dashboard.html')
+
 
 @app.route('/test', methods=['GET'])
 def test():
