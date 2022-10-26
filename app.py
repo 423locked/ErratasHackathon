@@ -15,9 +15,9 @@ template_path = os.path.join(project_root, 'templates')
 app = Flask(__name__, template_folder=template_path)
 
 
-#@app.errorhandler(Exception)
-#def all_exception_handler(error):
-#   return 'Error', 500
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+    return render_template('error.html')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -33,15 +33,14 @@ def register():
         user.firstname = request.form['firstname']
         user.middlename = request.form['middlename']
         user.lastname = request.form['lastname']
-        user.groupname = '123' # ПЕРЕДЕЛАТЬ!!!
+        user.groupname = '123'
         user.username = request.form['username']
         user.password = request.form['password']
         user.identifier = json.dumps(
             {'mail': request.form['mail'], 'phone': request.form['phone']})
 
-        # Нужно прописать обязательные и необязательный поля
         if ORM.isUserRegisteredByUsername(user.username):
-            return render_template('index.html', success=False) # Отпечатать ошибку, что пользователь уже создан
+            return render_template('index.html', success=False)
         else:
             ORM.register_user(user)
             loger.logRegister(user.username)
@@ -70,7 +69,7 @@ def login():
             # По-хорошему здесь надо перенапраить пользователя на другой адрес ("/dashboard")
             return render_template('successfulllogin.html', accessToken=ORM.getAccessToken(username)) # Таблица из задания номер 2
         else:
-            return render_template('login.html', wrongCredentials=True) # Отпечатать "Неправильное имя польхователя или пароль"
+            return render_template('login.html', wrongCredentials=True)
     else:
         return render_template('login.html')
 
@@ -81,22 +80,12 @@ def dashboard():
     print(request.args.get('accessToken'))
     if request.args.get('accessToken') is not None:
         if ORM.isTokenOverdue(token):
-             return redirect(url_for('login', sessionEnded=True)) # НАПИШИ, что сессия кончилась
+             return redirect(url_for('login', sessionEnded=True))
         else:
-            return render_template('_dashboard.html') # Бля буду
+            return render_template('_dashboard.html')
     else:
         print("bla")
         return render_template('dashboard.html')
-
-
-@app.route('/test', methods=['GET'])
-def test():
-    return ORM.getAccessToken("mike")
-
-
-@app.route('/testvue', methods=['GET'])
-def testvue():
-    return render_template('test.html')
 
 
 if __name__ == '__main__':
