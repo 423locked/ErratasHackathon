@@ -44,7 +44,7 @@ def register():
             return render_template('index.html', success=False) # Отпечатать ошибку, что пользователь уже создан
         else:
             ORM.register_user(user)
-            server.logRegister(user.username)
+            loger.logRegister(user.username)
             return render_template('index.html', success=True)
     else:
         return render_template('index.html')
