@@ -72,8 +72,12 @@ def login():
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
-def dashboard():
-    return render_template('dashboard.html')
+def dashboard():  
+    token = request.get_json(force=True, silent=True)
+    if not ORM.isTokenOverdue(token):
+        return redirect(url_for('login'), 301) # Можешь переделать с отдельной страничкой (как и после регистрации), чтобы отправлять сообщение об ошибки
+    else:
+        return render_template('dashboard.html')
 
 
 @app.route('/test', methods=['GET'])

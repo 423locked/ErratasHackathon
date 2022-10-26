@@ -1,11 +1,11 @@
-from openpyxl import load_workbook # EXCEL
+from openpyxl import load_workbook 
 
-# Обработка расписания из файла
+# Обработка расписания из файла (ТОЛЬКО ДЛЯ БИСО 01, 02 и 03)
 def get_lessons(NAME):
 
-	lessons = [["" for i in range(7)] for i in range(14)] # 7 пар каждый день в течение двух недель
+	lessons = [["" for i in range(7)] for i in range(12)] # 7 пар каждый день в течение двух недель
 
-	excel_file = load_workbook('./IKB.xlsx')
+	excel_file = load_workbook('./LessonParser/IKB.xlsx')
 
 	sheet_names = excel_file.sheetnames
 
@@ -30,7 +30,7 @@ def get_lessons(NAME):
 
 			for i in range(4,88): # Строки таблицы с 4-ой по 88-ую
 				# В четных ячейках лежат пары нечетных недель и наоборот
-				day = (i-4)//12 + (i%2)*7 # День пары
+				day = (i-4)//14 + (i%2)*6 # День пары
 				pare_index = ((i-4)%14)//2 # Номер пары 				
 
 				if sheet[row+str(i)].value != "" and not (sheet[row+str(i)].value is None): # Если пара существует
@@ -71,6 +71,11 @@ def get_lessons(NAME):
 	lessons.append([])
 	#print(lessons)
 	return lessons
+
+for i in get_lessons("БИСО-01-22"):
+	print(i,"\n")
+
 '''
 Возвращает массив из 14 массивов (14 дней в двух неделях)
 В каждом из этих массивов 7 массивов с информацией о паре(7 пар в день)
+'''

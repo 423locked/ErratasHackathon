@@ -27,6 +27,14 @@
 	<link rel="stylesheet" type="text/css" href="./static/css/main.css">
 <!--===============================================================================================-->
 </head>
+
+<script> 
+	httpRequest = new XMLHttpRequest();
+    httpRequest.open('POST', 'dashboard');
+    var data = JSON.stringify({"accessToken": localStorage.getItem('accessToken')});
+    httpRequest.send(data);
+</script>
+
 <body>
     <h1>Dashboard</h1>
 </body>
