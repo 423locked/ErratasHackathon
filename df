@@ -1,0 +1,101 @@
+<script>
+		// initialize the validation library
+		const validation = new JustValidate('#form', {
+			  errorFieldCssClass: 'is-invalid',
+			  tooltip: {
+			  	position: 'right'
+			  }
+		});
+		// apply rules to form fields
+		validation
+		  .addField('#username', [
+			{
+			  rule: 'minLength',
+			  value: 3,
+			},
+			{
+			  rule: 'maxLength',
+			  value: 30,
+			},
+			{
+			  rule: 'required'
+			},
+			{
+			  rule: 'customRegexp',
+			  value: '^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$',
+			  errorMessage: 'Incorrect format'
+			}
+		  ])
+		  .addField('#firstname', [
+			{
+			  rule: 'minLength',
+			  value: 3,
+			},
+			{
+			  rule: 'maxLength',
+			  value: 30,
+			},
+			{
+			  rule: 'required'
+			},
+			{
+			  rule: 'customRegexp',
+			  value: '([A-Z][a-z]*)',
+			  errorMessage: 'Incorrect format, correct - e.g. Mark, Jane'
+			}
+		  ])
+		  .addField('#middlename', [
+			{
+			  rule: 'minLength',
+			  value: 3,
+			},
+			{
+			  rule: 'maxLength',
+			  value: 30,
+			},
+			{
+			  rule: 'required'
+			},
+			{
+			  rule: 'customRegexp',
+			  value: '([A-Z][a-z]*)',
+			  errorMessage: 'Incorrect format, correct - e.g. Mark, Jane'
+			}
+		  ])
+		  .addField('#lastname', [
+			{
+			  rule: 'minLength',
+			  value: 3,
+			},
+			{
+			  rule: 'maxLength',
+			  value: 30,
+			},
+			{
+			  rule: 'required'
+			},
+			{
+			  rule: 'customRegexp',
+			  value: '([A-Z][a-z]*)',
+			  errorMessage: 'Incorrect format, correct - e.g. Mark, Jane'
+			}
+		  ])
+		  .addField('#email', [
+			{
+			  rule: 'email',
+			  errorMessage: 'Email is invalid!',
+			}
+		  ])
+		  .addField('#password', [
+			{
+			  rule: 'strongPassword',
+			},
+			{
+			  rule: 'required'
+			}
+		  ])
+		  .onSuccess((event) => {
+			console.log('Validation passes and form submitted', event);
+			validation.destroy()
+		  });
+	</script>

@@ -29,10 +29,12 @@
 </head>
 	<body>
 
+	<script src="static/vendor/validator.js"></script>
+
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<form method="POST" class="login100-form validate-form plsvalidate">
+				<form id="form" method="POST" class="login100-form validate-form plsvalidate">
 					<span class="login100-form-title p-b-49">
 						Login
 					</span>
@@ -56,7 +58,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn">
+							<button class="login100-form-btn" >
 								Login
 							</button>
 						</div>
@@ -69,6 +71,45 @@
 
 	<div id="dropDownSelect1"></div>
 
+	<script>
+		// initialize the validation library
+		const validation = new JustValidate('#form', {
+			  errorFieldCssClass: 'is-invalid',
+			  tooltip: {
+			  	position: 'right'
+			  },
+			  lockForm: false
+		});
+		// apply rules to form fields
+		validation
+		.addField('#username', [
+				{
+				  rule: 'minLength',
+				  value: 3,
+				},
+				{
+				  rule: 'maxLength',
+				  value: 30,
+				},
+				{
+				  rule: 'required'
+				},
+				{
+				  rule: 'customRegexp',
+				  value: '^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$',
+				  errorMessage: 'Incorrect format'
+				}
+			  ])
+	    .addField('#password', [
+		{
+		  rule: 'required'
+		}
+		  ])
+		  .onSuccess((event) => {
+			console.log('Validation passes and form submitted', event);
+			validation.destroy()
+	 	 });
+	</script>
 <!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->

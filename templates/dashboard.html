@@ -28,14 +28,37 @@
 <!--===============================================================================================-->
 </head>
 
-<script> 
-	httpRequest = new XMLHttpRequest();
-    httpRequest.open('POST', 'dashboard');
-    var data = JSON.stringify({"accessToken": localStorage.getItem('accessToken')});
-    httpRequest.send(data);
-</script>
+
 
 <body>
-    <h1>Dashboard</h1>
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<h1>Dashboard</h1>
+				{% if authenticated == False %}
+				<form method="POST">
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<input type="hidden" id="token" name="accessToken"/>
+							<button class="login100-form-btn" type="submit">
+								Authenticate
+							</button>
+						</div>
+					</div>
+				</form>
+				{% elif authenticated == True %}
+				<div>
+					<h2>AUTHENTICATED</h2>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
 </body>
+
+<script>
+	document.querySelector('#token').value = localStorage.getItem('accessToken')
+</script>
+
 </html>

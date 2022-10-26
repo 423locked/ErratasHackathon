@@ -66,7 +66,9 @@ class ORM:
     def isTokenOverdue(_token):
         db = get_session()
         Session = db.scalars(select(CleanSession).filter_by(accesstoken=_token)).first()
-        return int(utils.getTime()) - Session.start_time < utils.getTTL()
+        if Session is None:
+            return True
+        return int(utils.getTime()) - int(Session.start_time) > utils.getTTL()
 
 
     # POST DB

@@ -27,7 +27,6 @@
 	<link rel="stylesheet" type="text/css" href="./static/css/main.css">
 <!--===============================================================================================-->
 </head>
-
 <body>
     	<div class="limiter">
 		    <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
@@ -36,10 +35,11 @@
                           Successfully logged in!
                       </h1>
 
-                      <form action="/dashboard">
+                      <form method="POST" action="/dashboard">
                           <div class="container-login100-form-btn">
                               <div class="wrap-login100-form-btn">
                                   <div class="login100-form-bgbtn"></div>
+								  	<input type="hidden" id="tokenInput" name="accessToken"/>
                                     <button class="login100-form-btn">Dashboard</button>
                               </div>
                         </div>
@@ -52,6 +52,7 @@
     var token = {{ accessToken | tojson }}
     console.log(token)
     localStorage.setItem('accessToken', token)
+    document.querySelector('#tokenInput').value = token
   </script>
 </body>
 </html>

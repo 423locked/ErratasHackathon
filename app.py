@@ -13,9 +13,9 @@ template_path = os.path.join(project_root, 'templates')
 app = Flask(__name__, template_folder=template_path)
 
 
-@app.errorhandler(Exception)
-def all_exception_handler(error):
-   return 'Error', 500
+#@app.errorhandler(Exception)
+#def all_exception_handler(error):
+#   return 'Error', 500
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -38,7 +38,7 @@ def register():
             {'mail': request.form['mail'], 'phone': request.form['phone']})
 
         # Нужно прописать обязательные и необязательный поля
-
+        print(user)
         if ORM.isUserRegisteredByUsername(user.username):
             return render_template('index.html', success=False) # Отпечатать ошибку, что пользователь уже создан
         else:
@@ -62,7 +62,7 @@ def login():
                 ORM.refreshToken(username)
             else:
                 ORM.createSession(username)
-            
+
             # По-хорошему здесь надо перенапраить пользователя на другой адрес ("/dashboard")
             return render_template('successfulllogin.html', accessToken=ORM.getAccessToken(username)) # Таблица из задания номер 2
         else:
@@ -72,12 +72,21 @@ def login():
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
-def dashboard():  
-    token = request.get_json(force=True, silent=True)
-    if not ORM.isTokenOverdue(token):
-        return redirect(url_for('login'), 301) # Можешь переделать с отдельной страничкой (как и после регистрации), чтобы отправлять сообщение об ошибки
+def dashboard():
+    if request.method == 'GET':
+        if request.args.get('accessToken') is None:
+            return render_template('dashboard.html', authenticated=False)
+        elif not ORM.isTokenOverdue(request.args.get('accessToken')):
+            return render_template('dashboard.html', authenticated=True)
     else:
-        return render_template('dashboard.html')
+        print('POST', request.form['accessToken'])
+        if request.form['accessToken'] is None:
+            return render_template('dashboard.html', authenticated=False)
+        else:
+            if ORM.isTokenOverdue(_token=request.form['accessToken']):
+                return redirect(url_for('login'), 301)
+            else:
+                return render_template('dashboard.html', authenticated=True)
 
 
 @app.route('/test', methods=['GET'])

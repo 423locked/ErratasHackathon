@@ -3,7 +3,7 @@ import _sha256, uuid, json, time, jwt
 from configs.hosts import JWT_SALT, TIME_TO_LIVE
 
 def getTTL():
-    return TIME_TO_LIVE
+    return int(TIME_TO_LIVE)
 
 def generatePK():
     return uuid.uuid4().__str__()
