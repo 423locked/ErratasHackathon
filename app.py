@@ -5,6 +5,8 @@ import os
 
 from models.User import User
 
+from utils import loger
+
 from ORM.sql_requests import ORM
 
 project_root = os.path.dirname(__file__)
@@ -38,11 +40,11 @@ def register():
             {'mail': request.form['mail'], 'phone': request.form['phone']})
 
         # Нужно прописать обязательные и необязательный поля
-        print(user)
         if ORM.isUserRegisteredByUsername(user.username):
             return render_template('index.html', success=False) # Отпечатать ошибку, что пользователь уже создан
         else:
             ORM.register_user(user)
+            server.logRegister(user.username)
             return render_template('index.html', success=True)
     else:
         return render_template('index.html')
@@ -60,8 +62,10 @@ def login():
 
             if ORM.isSessionExist(username):
                 ORM.refreshToken(username)
+                loger.logRefreshToken(username)
             else:
                 ORM.createSession(username)
+                loger.logCreateToken(username)
 
             # По-хорошему здесь надо перенапраить пользователя на другой адрес ("/dashboard")
             return render_template('successfulllogin.html', accessToken=ORM.getAccessToken(username)) # Таблица из задания номер 2
