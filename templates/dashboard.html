@@ -1,64 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>Logged in!</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="./static/images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./static/css/util.css">
-	<link rel="stylesheet" type="text/css" href="./static/css/main.css">
-<!--===============================================================================================-->
-</head>
-
-
+<script> 
+	httpRequest = new XMLHttpRequest();
+    httpRequest.open('POST', 'post_token');
+    var data = JSON.stringify({"accessToken": localStorage.getItem('accessToken')});
+    httpRequest.send(data);
+</script>
 
 <body>
-	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
-			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<h1>Dashboard</h1>
-				{% if authenticated == False %}
-				<form method="POST">
-					<div class="container-login100-form-btn">
-						<div class="wrap-login100-form-btn">
-							<div class="login100-form-bgbtn"></div>
-							<input type="hidden" id="token" name="accessToken"/>
-							<button class="login100-form-btn" type="submit">
-								Authenticate
-							</button>
-						</div>
-					</div>
-				</form>
-				{% elif authenticated == True %}
-				<div>
-					<h2>AUTHENTICATED</h2>
-				</div>
-				{% endif %}
-			</div>
-		</div>
-	</div>
+	asdads
 </body>
-
-<script>
-	document.querySelector('#token').value = localStorage.getItem('accessToken')
-</script>
 
 </html>

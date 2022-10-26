@@ -70,24 +70,15 @@ def login():
     else:
         return render_template('login.html')
 
+@app.route('/post_token', methods=['POST'])
+def post_token():
+    token = request.get_json(force=True)
+    return ""
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    if request.method == 'GET':
-        if request.args.get('accessToken') is None:
-            return render_template('dashboard.html', authenticated=False)
-        elif not ORM.isTokenOverdue(request.args.get('accessToken')):
-            return render_template('dashboard.html', authenticated=True)
-    else:
-        print('POST', request.form['accessToken'])
-        if request.form['accessToken'] is None:
-            return render_template('dashboard.html', authenticated=False)
-        else:
-            if ORM.isTokenOverdue(_token=request.form['accessToken']):
-                return redirect(url_for('login'), 301)
-            else:
-                return render_template('dashboard.html', authenticated=True)
-
+    return render_template('dashboard.html')
+    
 
 @app.route('/test', methods=['GET'])
 def test():
